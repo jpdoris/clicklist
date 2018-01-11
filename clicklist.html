@@ -1,0 +1,39 @@
+<ul>
+    <li>Milk</li>
+    <li>Eggs</li>
+    <li>Bacon</li>
+    <li>Cheese</li>
+</ul>
+<div id="clickedElements">
+</div>
+
+<script>
+    Array.prototype.pushIfDoesntExist = function (item){
+        if(this.indexOf(item) === -1) {
+            this.push(item);
+            return true;
+        }
+        return false;
+    }
+
+    var Testing = {
+        clickedList: [],
+        applyListeners: function() {
+            var self = this;
+            var nodes = document.getElementsByTagName('li');
+            for (var i = 0; i < nodes.length; i++) {
+                document.getElementsByTagName('li')[i].addEventListener('click', function() {
+                    //we only want to display an item once
+                    self.clickedList.pushIfDoesntExist(this.textContent)
+                    self.displayData();
+                });
+            }
+        },
+        displayData: function() {
+            var textBox = document.getElementById('clickedElements');
+            textBox.textContent = this.clickedList.join(', ');
+        }
+    }
+
+    Testing.applyListeners();
+</script>
